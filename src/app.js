@@ -3,6 +3,8 @@ const BASE_URL = `https://www.thesportsdb.com/api/v1/json/${API_KEY}`;
 const inputBar = document.getElementById("input-bar");
 const searchBtn = document.getElementById("search-btn");
 const teamDisplayGrid = document.getElementById("team-display-grid");
+const playerDisplayGrid = document.getElementById("player-display-grid");
+const rosterContainer = document.getElementById("roster-container");
 
 async function searchTeams () {
   const query = inputBar.value.trim();
@@ -14,13 +16,32 @@ async function searchTeams () {
 
     await fetch (searchTeamURL)
             .then((res) => res.json())
-            .then((data) => teamDetails(data.teams));
+            .then((data) => {
+              if(data.teams) {
+                teamDetails(data.teams);
+                allPlayers(data.teams[0].idTeam);
+              }
+            });
   } catch (e) {
     alert("An error occured while fetching data.");
   }
 }
 
+async function allPlayers (teamId) {
+  try {
+    let allPlayerURL = `${BASE_URL}/lookup_all_players.php?id=${teamId}`;
+
+    await fetch(allPlayerURL)
+          .then((res) => res.json())
+          .then((data) => allPlayerDetails(data.player));
+  } catch (e) {
+    alert("Error fetching players");
+  }
+}
+
 function teamDetails (teams) {
+  rosterContainer.classList.remove("hidden");
+
   let teamsHtml = "";
 
   teams.forEach((team) => {
@@ -50,6 +71,25 @@ function teamDetails (teams) {
     `;
   });
   teamDisplayGrid.innerHTML = teamsHtml;
+}
+
+function allPlayerDetails (playerDetails) {
+  let playerDetailsHTML = "";
+
+  playerDetails.forEach((player) => {
+    playerDetailsHTML += `
+      <div class="border border-gray-600 py-2 px-3 rounded-lg text-center">
+        <img src="${player.strThumb}" alt="${player.strPlayer}" class="w-full object-cover rounded-lg">
+        <h3 class="text-white text-xl my-2">
+          ${player.strPlayer}
+        </h3>
+        <p class="text-gray-300 mb-2">
+          ${player.strPosition}
+        </p>
+      </div>
+    `;
+  });
+  playerDisplayGrid.innerHTML = playerDetailsHTML;
 }
 
 searchBtn.addEventListener("click", () => {
