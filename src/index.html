@@ -63,17 +63,60 @@
           </div> -->
         </div>
           <div class="flex items-center justify-center">
-            <div class="overlay fixed top-0 left-0 w-full h-full flex items-center justify-center bg-[#0000005e]">
-              <div class="popup bg-slate-800 w-[70%] min-h-[500px] p-10 rounded-lg flex items-center gap-6">
-                <img src="https://static.vecteezy.com/system/resources/previews/039/887/067/non_2x/cocktail-glass-logo-set-template-cocktail-glass-logo-set-of-elements-cocktail-glass-illustration-vector.jpg" alt="" class="w-48 h-48 object-cover rounded-lg shrink-0">
-                <div class="flex flex-col gap-1">
-                  <h2 class="text-2xl font-bold text-slate-50">Name</h2>
-                  <p class="text-slate-200">Team name</p>
-                  <p class="text-slate-300">country</p>
-                  <p class="text-slate-300">game</p>
-                </div>
-              </div>
-            </div>
+            <div class="overlay fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black/60 z-50 p-4">
+  <!-- Main Card Container (Vertical Flexbox) -->
+  <div class="popup bg-slate-800 w-full max-w-[600px] p-8 rounded-lg flex flex-col gap-6 shadow-2xl">
+    
+    <!-- TOP SECTION: Image (Left) + Basic Info (Right) -->
+    <div class="flex items-center gap-6">
+      <img 
+        src="https://static.vecteezy.com/system/resources/previews/039/887/067/non_2x/cocktail-glass-logo-set-template-cocktail-glass-logo-set-of-elements-cocktail-glass-illustration-vector.jpg" 
+        alt="Player photo" 
+        class="w-36 h-36 object-cover rounded-lg shrink-0 bg-slate-700"
+      >
+      <div class="flex flex-col gap-1">
+        <h2 class="text-2xl font-bold text-slate-50">Name</h2>
+        <p class="text-sky-400 font-semibold">Team name</p>
+        <p class="text-slate-300 text-sm">country</p>
+        <p class="text-slate-300 text-sm">game</p>
+      </div>
+    </div>
+
+    <!-- BOTTOM SECTION: Stats Grid (Placed Directly BELOW Top Section) -->
+    <div class="grid grid-cols-2 gap-4 bg-slate-900/60 p-4 rounded-lg border border-slate-700">
+      <div class="space-y-3">
+        <div>
+          <p class="text-xs uppercase text-slate-400 font-semibold tracking-wider">POSITION</p>
+          <p class="text-slate-100 font-medium">lorem</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-slate-400 font-semibold tracking-wider">HEIGHT</p>
+          <p class="text-slate-100 font-medium">lorem</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-slate-400 font-semibold tracking-wider">BIRTH-DATE</p>
+          <p class="text-slate-100 font-medium">lorem</p>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <p class="text-xs uppercase text-slate-400 font-semibold tracking-wider">NUMBER</p>
+          <p class="text-slate-100 font-medium">lorem</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-slate-400 font-semibold tracking-wider">WEIGHT</p>
+          <p class="text-slate-100 font-medium">lorem</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-slate-400 font-semibold tracking-wider">SIGNING VALUE</p>
+          <p class="text-slate-100 font-medium">lorem</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
           </div>
         </div>
     </div>
