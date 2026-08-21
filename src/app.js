@@ -78,19 +78,34 @@ function allPlayerDetails (playerDetails) {
 
   playerDetails.forEach((player) => {
     playerDetailsHTML += `
-      <div class="border border-gray-600 py-2 px-3 rounded-lg text-center">
-        <img src="${player.strThumb}" alt="${player.strPlayer}" class="w-full object-cover rounded-lg">
-        <h3 class="text-white text-xl my-2">
-          ${player.strPlayer}
-        </h3>
-        <p class="text-gray-300 mb-2">
-          ${player.strPosition}
-        </p>
-      </div>
+      <button class="cursor-pointer transition-transform duration-400 ease-in-out hover:border border-blue-400 rounded-lg hover:-translate-y-1">
+        <div class="border border-gray-600 py-2 px-3 rounded-lg text-center">
+          <img src="${player.strThumb}" alt="${player.strPlayer}" class="w-full object-cover rounded-lg">
+          <h3 class="text-white text-xl my-2">
+            ${player.strPlayer}
+          </h3>
+          <p class="text-gray-300 mb-2">
+            ${player.strPosition}
+          </p>
+        </div>
+      </button>
     `;
   });
   playerDisplayGrid.innerHTML = playerDetailsHTML;
 }
+
+async function playerDetailsURL () {
+  let playerDetailURL = `${BASE_URL}/lookupplayer.php?id=34145937`;
+
+  try {
+    await fetch(playerDetailURL)
+            .then((res) => res.json())
+            .then((data) => console.log(data.players));
+  } catch(e) {
+    alert("Error fetching player details.");
+  }
+}
+playerDetailsURL();
 
 searchBtn.addEventListener("click", () => {
   searchTeams();
