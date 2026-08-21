@@ -6,6 +6,7 @@ const teamDisplayGrid = document.getElementById("team-display-grid");
 const playerDisplayGrid = document.getElementById("player-display-grid");
 const rosterContainer = document.getElementById("roster-container");
 const playerInfoGrid = document.getElementById("player-info-grid");
+const closeBtn = document.getElementById("close-btn");
 
 async function searchTeams () {
   const query = inputBar.value.trim();
@@ -79,7 +80,7 @@ function allPlayerDetails (playerDetails) {
 
   playerDetails.forEach((player) => {
     playerDetailsHTML += `
-      <button class="cursor-pointer transition-transform duration-400 ease-in-out hover:border border-blue-400 rounded-lg hover:-translate-y-1">
+      <button class="cursor-pointer transition-transform duration-400 ease-in-out hover:border border-blue-400 rounded-lg hover:-translate-y-1" onclick="playerDetailsURL('${player.idPlayer}')">
         <div class="border border-gray-600 py-2 px-3 rounded-lg text-center">
           <img src="${player.strThumb}" alt="${player.strPlayer}" class="w-full object-cover rounded-lg">
           <h3 class="text-white text-xl my-2">
@@ -95,8 +96,8 @@ function allPlayerDetails (playerDetails) {
   playerDisplayGrid.innerHTML = playerDetailsHTML;
 }
 
-async function playerDetailsURL () {
-  let playerDetailURL = `${BASE_URL}/lookupplayer.php?id=34145937`;
+async function playerDetailsURL (playerId) {
+  let playerDetailURL = `${BASE_URL}/lookupplayer.php?id=${playerId}`;
 
   try {
     await fetch(playerDetailURL)
@@ -107,15 +108,16 @@ async function playerDetailsURL () {
   }
 }
 
-playerDetailsURL();
-
 function playerInfo (players) {
+  playerInfoGrid.classList.add("visible");
+  playerInfoGrid.classList.remove("invisible");
+
   let playerInfoHTML = "";
 
   players.forEach((player) => {
     playerInfoHTML = `
       <div class="popup bg-slate-800 max-w-[650px] h-[700px] p-6 rounded-lg flex flex-col gap-6 relative overflow-hidden">
-        <div class="flex items-center gap-6">
+        <div class="flex items-center gap-6 relative">
           <img src="${player.strThumb}" alt="${player.strPlayer}" class="w-48 h-48 object-cover rounded-lg shrink-0">
           <div class="flex flex-col gap-1">
             <h2 class="text-2xl font-bold text-slate-50">${player.strPlayer || "N/A"} </h2>
@@ -123,6 +125,9 @@ function playerInfo (players) {
             <p class="text-slate-300">${player.strNationality || "N/A"}</p>
             <p class="text-slate-300">(${player.strSport || "N/A"})</p>
           </div>
+          <button class="absolute top-0 right-0 text-slate-400 hover:text-white text-xl p-1 transition-colors" id="close-btn" onclick="closeDetails()">
+            X
+          </button>
         </div>
 
         <div class="grid grid-cols-2 gap-4 bg-slate-900 p-4 rounded-lg">
@@ -166,6 +171,11 @@ function playerInfo (players) {
     `;
   });
   playerInfoGrid.innerHTML = playerInfoHTML;
+}
+
+function closeDetails () {
+  playerInfoGrid.classList.add("invisible");
+  playerInfoGrid.classList.remove("visible");
 }
 
 searchBtn.addEventListener("click", () => {
