@@ -5,6 +5,7 @@ const searchBtn = document.getElementById("search-btn");
 const teamDisplayGrid = document.getElementById("team-display-grid");
 const playerDisplayGrid = document.getElementById("player-display-grid");
 const rosterContainer = document.getElementById("roster-container");
+const playerInfoGrid = document.getElementById("player-info-grid");
 
 async function searchTeams () {
   const query = inputBar.value.trim();
@@ -100,12 +101,72 @@ async function playerDetailsURL () {
   try {
     await fetch(playerDetailURL)
             .then((res) => res.json())
-            .then((data) => console.log(data.players));
+            .then((data) => playerInfo(data.players));
   } catch(e) {
     alert("Error fetching player details.");
   }
 }
+
 playerDetailsURL();
+
+function playerInfo (players) {
+  let playerInfoHTML = "";
+
+  players.forEach((player) => {
+    playerInfoHTML = `
+      <div class="popup bg-slate-800 max-w-[650px] h-[700px] p-6 rounded-lg flex flex-col gap-6 relative overflow-hidden">
+        <div class="flex items-center gap-6">
+          <img src="${player.strThumb}" alt="${player.strPlayer}" class="w-48 h-48 object-cover rounded-lg shrink-0">
+          <div class="flex flex-col gap-1">
+            <h2 class="text-2xl font-bold text-slate-50">${player.strPlayer || "N/A"} </h2>
+            <p class="text-slate-200">${player.strTeam || "N/A"}</p>
+            <p class="text-slate-300">${player.strNationality || "N/A"}</p>
+            <p class="text-slate-300">(${player.strSport || "N/A"})</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 bg-slate-900 p-4 rounded-lg">
+          <div class="space-y-3">
+            <div>
+              <p class="text-lg text-slate-300">POSITION</p>
+              <p class="text-blue-400 font-semibold">${player.strPosition || "N/A"}</p>
+            </div>
+            <div>
+              <p class="text-lg text-slate-300">HEIGHT</p>
+              <p class="text-blue-400 font-semibold">${player.strHeight || "N/A"}</p>
+            </div>
+            <div>
+              <p class="text-lg text-slate-300">BIRTH-DATE</p>
+              <p class="text-blue-400 font-semibold">${player.dateBorn || "N/A"}</p>
+            </div>
+          </div>
+            <div class="space-y-3">
+              <div>
+                <p class="text-lg text-slate-300">NUMBER</p>
+                <p class="text-blue-400 font-semibold">
+                ${player.strNumber || "N/A"}</p>
+              </div>
+              <div>
+                <p class="text-lg text-slate-300">WEIGHT</p>
+                <P class="text-blue-400 font-semibold">${player.strWeight || "N/A"}</P>
+              </div>
+              <div>
+                <p class="text-lg text-slate-300">SIGNING VALUE</p>
+                <p class="text-blue-400 font-semibold">
+                ${player.strSigning || "N/A"}</p>
+              </div>
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+          <h3 class="text-xl text-slate-300">Biography</h3>
+          <P class="text-slate-400">${player.strDescriptionEN || "N/A"}</P>
+        </div>
+      </div>
+    `;
+  });
+  playerInfoGrid.innerHTML = playerInfoHTML;
+}
 
 searchBtn.addEventListener("click", () => {
   searchTeams();
